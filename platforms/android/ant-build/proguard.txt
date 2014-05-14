@@ -1,0 +1,3 @@
+# view AndroidManifest.xml #generated:6
+-keep class com.example.sugar_web_template_android.Try_sugar_web_template_android { <init>(...); }
+

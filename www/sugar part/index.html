@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8" />
+	<title>Acceleration Example</title>
+<link rel="stylesheet" media="not screen and (device-width: 1200px) and (device-height: 900px)"
+      href="lib/sugar-web/graphics/css/sugar-96dpi.css">
+<link rel="stylesheet" media="screen and (device-width: 1200px) and (device-height: 900px)"
+      href="lib/sugar-web/graphics/css/sugar-200dpi.css">
+<link rel="stylesheet" href="css/activity.css">
+<script data-main="js/loader" src="lib/require.js"></script>
+
+
+	<!--<script type="text/javascript" charset="utf-8" src="cordova.js"></script>-->
+	<script type="text/javascript" charset="utf-8">
+
+	// The watch id references the current `watchAcceleration`
+	var watchID = null;
+
+	// Wait for device API libraries to load
+	//
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	// device APIs are available
+	//
+	function onDeviceReady() {
+	startWatch();
+	}
+
+	// Start watching the acceleration
+	//
+	function startWatch() {
+
+	// Update acceleration every 3 seconds
+	var options = { frequency: 3000 };
+
+	watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
+	}
+
+	// Stop watching the acceleration
+	//
+	function stopWatch() {
+	if (watchID) {
+	    navigator.accelerometer.clearWatch(watchID);
+	    watchID = null;
+	}
+	}
+
+	// onSuccess: Get a snapshot of the current acceleration
+	//
+	function onSuccess(acceleration) {
+	var element = document.getElementById('accelerometer');
+
+	element.innerHTML = 'Acceleration X: ' + acceleration.x + ' ' +
+		            'Acceleration Y: ' + acceleration.y + ' ' +
+		            'Acceleration Z: ' + acceleration.z + ' ' +
+		            'Timestamp: '      + acceleration.timestamp + ' ';
+	}
+
+	// onError: Failed to get the acceleration
+	//
+	function onError() {
+	alert('onError!');
+	}
+
+	</script>
+</head>
+
+<body>
+<div id="main-toolbar" class="toolbar">
+  <button class="toolbutton" id="activity-button" title="My Activity"></button>
+
+  <!-- Add more buttons here -->
+
+  <!-- Buttons with class="pull-right" will be right aligned -->
+  <button class="toolbutton pull-right" id="stop-button" title="Stop"></button>
+</div>
+
+<!-- The content of your activity goes inside the canvas -->
+<div id="canvas">
+
+  <!-- Replace this message with your own content -->
+
+    	<div id="accelerometer">Waiting for accelerometer...</div>
+        <button onclick="stopWatch();">Stop Watching</button>
+
+</div>
+</body>
+
+</html>
